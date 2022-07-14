@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { themeContext } from "../context/Theme";
 
 interface ListTodoProps {
@@ -12,7 +12,7 @@ interface ListTodoProps {
 
 export const ListTodo = ({ todos, setTodos }: ListTodoProps) => {
   const { darkTheme } = useContext(themeContext);
-
+  
   const handleComplete = (id: number) => {
     let currentTodo = todos.find((todo) => todo.id === id);
     currentTodo!.completed = !currentTodo?.completed;

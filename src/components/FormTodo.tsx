@@ -1,48 +1,21 @@
-import { FormEvent, useContext, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import { ListTodo } from "./ListTodo";
 import { themeContext } from "../context/Theme";
 
 export const FormTodo = () => {
   const [inputTodo, setInputTodo] = useState("");
-  const {darkTheme, setDarkTheme} = useContext(themeContext);
-  
-  const [todos, setTodos] = useState([
-    {
-      id: 1,
-      text: "Complete online Javascript course",
-      completed: true,
-    },
-    {
-      id: 2,
-      text: "Jog around the park 3x",
-      completed: false,
-    },
-    {
-      id: 3,
-      text: "10 minutes meditation",
-      completed: false,
-    },
-    {
-      id: 4,
-      text: "Read for 1 hour",
-      completed: false,
-    },
-    {
-      id: 5,
-      text: "Pick up groceries",
-      completed: false,
-    },
-    {
-      id: 6,
-      text: "Complete Todo App on Frontend Mentor",
-      completed: false,
-    },
-  ]);
+  const { darkTheme, setDarkTheme } = useContext(themeContext);
+
+  const [todos, setTodos] = useState(() => {
+    const data = localStorage.getItem("todos");
+    return data ? JSON.parse(data) : [];
+  })
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (
-      todos.find((todo) => todo.text.toLowerCase() === inputTodo.toLowerCase())
+      todos.find((todo: {text: string}) => todo.text.toLowerCase() === inputTodo.toLowerCase())
     )
       return alert("Todo already exists");
 
@@ -55,18 +28,32 @@ export const FormTodo = () => {
           completed: false,
         },
       ]);
+
       setInputTodo("");
     }
   };
 
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos])
+
   return (
-    <header className={`${darkTheme ? 'md:bg-desktop-dark bg-mobile-dark' : 'md:bg-desktop-light bg-mobile-light'} object-cover h-[190px] bg-no-repeat w-full bg-cover bg-center relative lg:px-96 px-4 py-2`}>
+    <header
+      className={`${
+        darkTheme
+          ? "md:bg-desktop-dark bg-mobile-dark"
+          : "md:bg-desktop-light bg-mobile-light"
+      } object-cover h-[190px] bg-no-repeat w-full bg-cover bg-center relative lg:px-96 px-4 py-2`}
+    >
       <div className="content flex items-center justify-between mt-5">
         <h1 className="uppercase tracking-[5px] font-bold text-white text-2xl">
           Todo
         </h1>
 
-        <span className="cursor-pointer" onClick={() => setDarkTheme(!darkTheme)}>
+        <span
+          className="cursor-pointer"
+          onClick={() => setDarkTheme(!darkTheme)}
+        >
           <img
             className="w-5 cursor-pointer"
             src={darkTheme ? "/images/icon-moon.svg" : "/images/icon-sun.svg"}
@@ -77,14 +64,20 @@ export const FormTodo = () => {
 
       <form
         onSubmit={(e) => handleSubmit(e)}
-        className={`${darkTheme ? 'bg-DesaturatedBlue-dark' : 'bg-white'} py-2 px-5 rounded-md flex items-center mt-5`}
+        className={`${
+          darkTheme ? "bg-DesaturatedBlue-dark" : "bg-white"
+        } py-2 px-5 rounded-md flex items-center mt-5`}
       >
         <span className="border-solid border-2 rounded-full w-6 h-6 "></span>
 
         <input
           value={inputTodo}
           onChange={(e) => setInputTodo(e.target.value)}
-          className={`w-full p-2 bg-transparent focus:outline-0 ${darkTheme ? 'placeholder:text-white text-white' : 'placeholder:text-Grayish-Blue'}`}
+          className={`w-full p-2 bg-transparent focus:outline-0 ${
+            darkTheme
+              ? "placeholder:text-white text-white"
+              : "placeholder:text-Grayish-Blue"
+          }`}
           type="text"
           placeholder="Create a new todo.."
         />
