@@ -43,7 +43,7 @@ export const FormTodo = () => {
         darkTheme
           ? "md:bg-desktop-dark bg-mobile-dark"
           : "md:bg-desktop-light bg-mobile-light"
-      } object-cover h-[190px] bg-no-repeat w-full bg-cover bg-center relative lg:px-96 px-4 py-2`}
+      } object-cover h-[190px] bg-no-repeat w-full bg-cover bg-center relative lg:px-[10rem] xl:px-[22rem] md:px-[10rem] px-4 py-2`}
     >
       <div className="content flex items-center justify-between mt-5">
         <h1 className="uppercase tracking-[5px] font-bold text-white text-2xl">
