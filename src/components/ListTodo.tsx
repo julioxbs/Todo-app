@@ -66,7 +66,7 @@ export const ListTodo = ({ todos, setTodos }: ListTodoProps) => {
           </li>
         ))}
 
-        <li className={`flex items-center justify-between px-5 p-3 ${darkTheme ? 'bg-DesaturatedBlue-dark' : 'bg-white'} rounded-md text-[15px] text-gray-400`}>
+        <li className={`flex items-center justify-between px-5 p-3 ${darkTheme ? 'bg-DesaturatedBlue-dark' : 'bg-white'} text-[15px] text-gray-400`}>
           <span>
             {todos?.length - todos?.filter((todo) => todo.completed).length}{" "}
             items left
